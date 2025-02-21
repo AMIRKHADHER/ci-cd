@@ -17,6 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    git branch: 'main', url: 'https://github.com/AMIRKHADHER/ci-cd.git'
                     sh 'mvn clean install package'
                     sh "docker build -t ${IMAGE_NAME} ."
                 }
