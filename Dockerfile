@@ -5,11 +5,10 @@ FROM tomcat:9-jdk17
 ENV CATALINA_HOME /usr/local/tomcat
 ENV CATALINA_BASE /usr/local/tomcat
 
-# Remove the default web apps in Tomcat (optional)
-RUN rm -rf $CATALINA_HOME/webapps/*
+
 
 # Copy the Spring Boot WAR file to the Tomcat webapps directory
-COPY **/*.war $CATALINA_HOME/webapps/
+COPY **/*.war /usr/local/tomcat/webapps
 
 # Expose the port Tomcat is listening on (default 8080)
 EXPOSE 8888
