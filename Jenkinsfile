@@ -1,26 +1,38 @@
 pipeline {
     agent any
+
+    environment {
+        IMAGE_NAME = "myapp"
+        CONTAINER_NAME = "myapp-container"
+        PORT = "8080"
+    }
+
     stages {
-        stage ('Build Servlet Project') {
+        stage('Checkout') {
             steps {
-                /*For windows machine */
-               bat  'mvn clean package'
-
-                /*For Mac & Linux machine */
-               // sh  'mvn clean package'
+                checkout scm
             }
+        }
 
-            post{
-                success{
-                    echo 'Now Archiving ....'
-
-                    archiveArtifacts artifacts : '**/*.war'
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh "docker build -t ${IMAGE_NAME} ."
                 }
             }
         }
 
-      
-
-     
+        stage('Run Container') {
+            steps {
+                script {
+                    // Stop and remove the container if it's already running
+                    sh "docker stop ${CONTAINER_NAME} || true"
+                    sh "docker rm ${CONTAINER_NAME} || true"
+                    
+                    // Run the new container
+                    sh "docker run -d --name ${CONTAINER_NAME} -p ${PORT}:8080 ${IMAGE_NAME}"
+                }
+            }
+        }
     }
 }
