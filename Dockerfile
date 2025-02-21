@@ -9,7 +9,7 @@ ENV CATALINA_BASE /usr/local/tomcat
 RUN rm -rf $CATALINA_HOME/webapps/*
 
 # Copy the Spring Boot WAR file to the Tomcat webapps directory
-COPY **/*.war $CATALINA_HOME/webapps/ROOT.war
+COPY **/*.war $CATALINA_HOME/webapps/
 
 # Expose the port Tomcat is listening on (default 8080)
 EXPOSE 8888
