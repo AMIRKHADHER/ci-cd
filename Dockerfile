@@ -1,9 +1,6 @@
 # Use Tomcat base image
 FROM tomcat:9-jdk17
 
-# Set environment variables for Tomcat
-ENV CATALINA_HOME /usr/local/tomcat
-ENV CATALINA_BASE /usr/local/tomcat
 
 
 
